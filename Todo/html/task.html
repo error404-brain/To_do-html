@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>To-Do</title>
+<link rel="stylesheet" href="/Css_todo/index.css">
+<link rel="stylesheet" href="/icon.css/css/all.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+   
+
+<div class="navbar">
+    <div>
+        <a><i class="fa-solid fa-bars"></i></a>
+        <a href="MyDay.html" btn> To Do</a>
+    </div>
+    <div class="search-container">
+        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        <input type="search" class="search-input">
+    </div>
+    <div>
+        <a><i class="fa-solid fa-question"></i></a>
+        <a><i class="fa-solid fa-gear"></i></a>
+        <a><i class="fa-solid fa-bullhorn"></i></a>
+    </div>
+</div>
+
+<div class="sidebar" id="sidebar">
+    <a><i class="fa-solid fa-bars" onclick="toggleSidebar()"></i></a>
+    <a href="MyDay.html"><i class="fa-regular fa-sun"></i> <span>My Day</span></a>
+    <a href="important.html"><i class="fa-regular fa-star"></i><span>Important</span></a>
+    <a href="planned.html"><i class="fa-solid fa-calendar-alt"></i> <span>Planned</span></a>
+    <a href="Assegned.html"><i class="fa-solid fa-user"></i> <span>Assigned to me</span></a>
+    <a href="flag.html"><i class="fa-solid fa-flag"></i> <span>Flagged email</span></a>
+    <a href="task.html"><i class="fa-solid fa-tasks"></i> <span>Task</span></a>
+    <hr>
+</div>
+
+<div class="task-content">
+    <div class="task-toolbar">
+        <div class="task-title-wrapper">
+            <h4><i class="fa-solid fa-house"></i>Task</h4>
+            <div class="item-list-option-item">
+                <a >...</a>
+                <a  id="gridViewBtn" onclick="showGridView()">Grid</a>
+                <a  id="listViewBtn" onclick="showListView()">List</a>
+            </div>
+            <div class="item-list-option-item-1">
+                <a><i class="fa-solid fa-sort"></i> Sort</a>
+                <a><i class="fa-solid fa-address-book"></i> Group</a>
+                <a><i class="fa-regular fa-lightbulb"></i> Suggestion</a>     
+            </div>
+        </div>
+        <div class="tasksToolbar-subline">
+            <span id="currentDate"></span>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+
+<script>
+    function formatDate(date) 
+    {
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        return date.toLocaleDateString('en-US', options);
+    }
+    document.addEventListener("DOMContentLoaded", function() {
+        const dateElement = document.getElementById('currentDate');
+        const today = new Date();
+        dateElement.textContent = formatDate(today);
+    });
+    
+    function toggleSidebar()
+    {
+        var sidebar = document.getElementById('sidebar');
+        sidebar.classList.toggle('collapsed'); // Thêm hoặc xóa lớp "collapsed"
+    }
+
+
+</script>
