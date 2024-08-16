@@ -42,7 +42,7 @@
 }
 
 .sidebar a i {
-    margin-right: 5px; /* Add space between icon and text */
+    margin-right: 5px; /* Space between icon and text */
 }
 
 .sidebar.collapsed a {
@@ -74,29 +74,6 @@ div.content {
 
 .sidebar.collapsed ~ .task-content {
     margin-left: 50px; /* Adjust content margin when sidebar is collapsed */
-}
-
-/* Responsive: Sidebar turns into topbar on small screens */
-@media screen and (max-width: 700px) {
-    .sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
-    }
-    .sidebar a {
-        float: left;
-    }
-    div.content {
-        margin-left: 0;
-    }
-}
-
-/* Responsive: Sidebar is vertical on very small screens */
-@media screen and (max-width: 400px) {
-    .sidebar a {
-        text-align: center;
-        float: none;
-    }
 }
 
 /* Task Toolbar */
@@ -211,17 +188,17 @@ div.content {
 /* Search Container */
 .search-container {
     position: relative;
-    display: flex; /* Switch from inline-block to flex for easier alignment */
+    display: flex; /* Flexbox for alignment */
     align-items: center;
-    justify-content: center; /* Center content within the container */
-    width: 100%; /* Take full width of the navbar */
-    max-width: 400px; /* Set max width if needed */
-    margin: 0 auto; /* Center container in navbar */
+    justify-content: center; /* Center the search container */
+    width: 100%;
+    max-width: 400px; /* Optional max width */
+    margin: 0 auto;
 }
 
 .search-input {
-    width: 100%; /* Full width of search container */
-    padding: 8px 12px 8px 40px; /* Add left padding for icon */
+    width: 100%; /* Full width inside the container */
+    padding: 8px 12px 8px 40px; /* Left padding for the search icon */
     box-sizing: border-box;
     border-radius: 5px;
     height: 32px;
@@ -231,11 +208,11 @@ div.content {
 
 .search-icon {
     position: absolute;
-    left: 12px; /* Position icon on the left within the search input */
+    left: 12px; /* Position icon inside the input */
     top: 50%;
     transform: translateY(-50%);
     color: #aaa;
-    pointer-events: none; /* Ensure the icon doesn't affect text input */
+    pointer-events: none; /* Non-interactive icon */
 }
 
 /* Task List Container */
@@ -244,8 +221,8 @@ div.content {
     background-color: white;
     border-radius: 5px;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px; /* Add some space below the container */
-    padding: 0; /* Remove padding inside the container */
+    margin-bottom: 20px; /* Space below the container */
+    padding: 0;
 }
 
 /* Task List Table (Grid View) */
@@ -309,22 +286,146 @@ div.content {
     color: white;
 }
 
-
-.item-list-option-item-1
-{
-    display: block;
-    position: fixed;
-    right: 0;
+/* Right-Aligned Item List Option */
+.item-list-option-item-1 {
+    display: flex; /* Changed to flex for better alignment */
+    justify-content: flex-end;
+    padding: 10px;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd; /* Optional border */
 }
 
-
-.item-list-option-item-1 i,a
-{
+.item-list-option-item-1 a {
     margin-left: 15px;
-}
-
-a
-{
     color: black;
     text-decoration: none;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    padding: 5px 10px;
+    transition: background-color 0.3s ease;
+}
+
+.item-list-option-item-1 a i {
+    margin-right: 5px;
+}
+
+.item-list-option-item-1 a:hover {
+    background-color: #f1f1f1;
+}
+
+/* Default Link Styling */
+a {
+    color: black;
+    text-decoration: none;
+}
+
+/* Sidebar adjustments for mobile */
+@media screen and (max-width: 700px) {
+    .sidebar {
+        width: 100%; /* Full width on mobile */
+        height: auto; /* Adjust height automatically */
+        position: relative;
+    }
+
+    .sidebar a {
+        float: left;
+        text-align: left; /* Align text to the left */
+    }
+
+    div.content {
+        margin-left: 0; /* Remove margin on mobile to prevent overlap */
+    }
+
+    .task-toolbar, .task-content {
+        margin-left: 0;
+        padding: 10px;
+    }
+
+    /* Task content should take up full width */
+    .task-content {
+        width: 100%;
+        padding: 0;
+        background-color: #f4f4f4;
+        overflow-y: auto;
+    }
+
+    .task-list-container, .task-list-table {
+        width: 100%; /* Full width on mobile */
+        overflow-x: auto; /* Allow horizontal scrolling if necessary */
+    }
+
+    /* Adjust the grid and list view */
+    .task-list-table {
+        table-layout: auto; /* Allow the table to adjust its width */
+    }
+
+    .task-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .task-item-actions {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+    }
+}
+
+/* Additional adjustments for very small screens */
+@media screen and (max-width: 400px) {
+    .navbar a {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    .search-container {
+        width: 100%;
+        max-width: none;
+    }
+
+    .search-input {
+        font-size: 14px;
+        padding: 8px 8px 8px 30px;
+    }
+
+    .task-item {
+        padding: 8px;
+    }
+
+    .task-item .task-title {
+        font-size: 14px;
+    }
+
+    .task-item .task-subtitle {
+        font-size: 12px;
+    }
+
+    .task-item input[type="checkbox"] {
+        transform: scale(1);
+        margin-right: 10px;
+    }
+
+    .task-item-actions i {
+        font-size: 16px;
+    }
+}
+
+
+
+.task-list-today
+{
+    border: thin solid black;
+    color: #000;
+}
+
+.task-list-tomorrow
+{
+    border: thin solid black;
+    color: #000;
+}
+.task-list-earlier
+{
+    border: thin solid black;
+    color: #000;
 }

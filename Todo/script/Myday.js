@@ -31,8 +31,8 @@ function showListView() {
     document.getElementById('gridViewBtn').classList.remove('active');
 }
 
-function generateNewGridTask(taskInput, taskId)
- {
+function generateNewGridTask(taskInput, taskId, taskDate)
+{
     var table = document.getElementById('taskListGrid');
     var row = document.createElement('tr');
     row.setAttribute('data-task-id', taskId);
@@ -43,13 +43,13 @@ function generateNewGridTask(taskInput, taskId)
             <span>${taskInput}</span>
         </td>
         <td>
-            <input type="date">
+            <input type="date" value="${taskDate ? new Date(taskDate).toISOString().split('T')[0] : ''}">
         </td>
         <td>
-             <i class="fa-regular fa-star" onclick="importanttask(this)"></i>
+             <i class="fa-regular fa-star" onclick="importanttask(this, '${taskId}')"></i>
         </td>
         <td>
-            <a class="btn" onclick="deleteTask(this)">delete</a>
+            <a class="btn" onclick="deleteTask(this, '${taskId}')">delete</a>
         </td>
     `;
 
@@ -81,20 +81,28 @@ function generateNewListTask(taskInput, taskId)
 }
 
 function addTask()
- {
+{
     var taskInput = document.getElementById('taskInput').value;
+    
+    if (taskInput.trim() === '') {
+        alert('Task input cannot be empty');
+        return;
+    }
 
-    var newtask = 
-    {
+    var newTask = {
         id: new Date().getTime(),
-        name: taskInput
+        name: taskInput,
+        date: new Date().getTime(),  
+        isImportant: false 
     };
-    Taks_ds_add.push(newtask);
-    generateNewGridTask(newtask.name, newtask.id);
-    generateNewListTask(newtask.name, newtask.id);
+    
+    Taks_ds_add.push(newTask);
+    generateNewGridTask(newTask.name, newTask.id, newTask.date);
+    generateNewListTask(newTask.name, newTask.id, newTask.date);
     updateTaskslist();
     document.getElementById('taskInput').value = '';
 }
+
 
 function updateTaskslist() 
 {
@@ -126,25 +134,21 @@ function deleteTaskById(id)
     updateTaskslist();
 }
 
-function loadTasksFromStorage(type)
-{
+function loadTasksFromStorage(type) {
     if (type == 'ALL' || type == undefined || type == null) {
-        Taks_ds_add.forEach(function(task) 
-        {
+        Taks_ds_add.forEach(function(task) {
             generateNewGridTask(task.name, task.id);
             generateNewListTask(task.name, task.id);
         });
-    } 
-    else if (type == 'IMPORTANT')
-    {
+    } else if (type == 'IMPORTANT') {
         const importantTasks = Taks_ds_add.filter(task => task.isImportant);
-
         importantTasks.forEach(function(task) {
             generateNewGridTask(task.name, task.id);
             generateNewListTask(task.name, task.id);
-        })
+        });
     }
 }
+
 function doneTask(checkbox, taskId) 
 {
     var gridTaskElement = document.querySelector(`#taskListGrid tr[data-task-id="${taskId}"]`) || document.querySelector(`#taskListDoneGrid tr[data-task-id="${taskId}"]`);
@@ -185,39 +189,22 @@ function doneTask(checkbox, taskId)
     }
 }
 
-function importanttask(element)
- {
-   
-    if (element.classList.contains('fa-regular'))
-    {
-        element.classList.remove('fa-regular');
-        element.classList.add('fa-solid');
-    } 
-    else
-    {
-        element.classList.remove('fa-solid');
-        element.classList.add('fa-regular');
-    }
+function importanttask(element) 
+{
     var taskElement = element.closest('tr') || element.closest('.task-item');
     var taskId = taskElement.getAttribute('data-task-id');
-    var taskName = taskElement.querySelector('span') ? taskElement.querySelector('span').textContent : taskElement.querySelector('.task-title').textContent;
-    var importantTasks = JSON.parse(localStorage.getItem('importantTasks')) || [];
-    var taskExists = importantTasks.some(task => task.id == taskId);
+    
+    // Find the task in the array
+    var task = Taks_ds_add.find(task => task.id == taskId);
 
-    if (!taskExists) 
-    {
-        var newImportantTask = {
-            id: taskId,
-            name: taskName
-        };
-        importantTasks.push(newImportantTask);
+    if (element.classList.contains('fa-regular')) {
+        element.classList.remove('fa-regular');
+        element.classList.add('fa-solid');
+        task.isImportant = true;
+    } else {
+        element.classList.remove('fa-solid');
+        element.classList.add('fa-regular');
+        task.isImportant = false;
     }
-     else 
-    {
-        importantTasks = importantTasks.filter(task => task.id != taskId);
-    }
-
-    // Update localStorage
-    localStorage.setItem('importantTasks', JSON.stringify(importantTasks));
+    updateTaskslist();
 }
-

@@ -1,8 +1,10 @@
+<!DOCTYPE html>
 <html>
 <head>
 <title>To-Do</title>
 <link rel="stylesheet" href="/Css_todo/index.css">
 <link rel="stylesheet" href="/icon.css/css/all.css">
+<script src="/script/planned.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
@@ -43,8 +45,8 @@
             <h4><i class="fa-solid fa-calendar-days"></i>Planned</h4>
             <div class="item-list-option-item">
                 <a >...</a>
-                <a  id="gridViewBtn" onclick="showGridView()">Grid</a>
-                <a  id="listViewBtn" onclick="showListView()">List</a>
+                <a  id="gridViewBtn">Grid</a>
+                <a  id="listViewBtn">List</a>
             </div>
             <div class="item-list-option-item-1">
                 <a><i class="fa-solid fa-sort"></i> Sort</a>
@@ -56,33 +58,48 @@
             <span id="currentDate"></span>
         </div>
     </div>
+     
+    <div class="task-list">
+        <div class="task-add-data">
+            <input type="text" id="taskInput" class="task-input" placeholder="+ add task">
+            <div class="task-add-item">
+                <a><i class="fa-solid fa-calendar-days"></i></a>
+                
+                <a><i class="fa-regular fa-bell"></i></a>
+                <a><i class="fa-solid fa-repeat"></i></a>     
+                <div class="add_button">
+                    <a onclick="addTask()" class="btn">Add</a>
+                    <input type="date" id="taskDateInput" class="task-date-input">
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <div id="gridContainer" class="task-list-container">
+            <p>Grid View</p>
+            <div class="task-list-today">
+                <P>Today</P>
+                <div id ="taskListGrid-today">
+
+                </div>
+            </div>
+            <div class="task-list-tomorrow">
+                <P>Tomorrow</P>
+                <div id ="taskListGrid-tomorrow">
+
+                </div>
+            </div>
+            <div class="task-list-earlier">
+                <P>Earlier</P>
+                <div id ="taskListGrid-earlier">
+
+                </div>
+            </div>
+
+        </div>
+
 </div>
-
-
 
 
 </body>
 </html>
-
-<script>
-    function formatDate(date) 
-    {
-        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        return date.toLocaleDateString('en-US', options);
-    }
-    document.addEventListener("DOMContentLoaded", function() {
-        const dateElement = document.getElementById('currentDate');
-        const today = new Date();
-        dateElement.textContent = formatDate(today);
-    });
-    
-    function toggleSidebar()
-    {
-        var sidebar = document.getElementById('sidebar');
-        sidebar.classList.toggle('collapsed'); // Thêm hoặc xóa lớp "collapsed"
-    }
-    
-                                                                                                                                                       
-
-
-</script>
